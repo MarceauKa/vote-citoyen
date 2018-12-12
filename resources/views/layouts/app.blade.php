@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" style="line-height: 24px;">
-                    <img src="/favicon.png" alt="Logo" class="img-fluid" style="max-height: 24px;" />
+                    <img src="/favicon.png" alt="Logo" class="img-fluid mr-2" style="max-height: 24px; vertical-align: top;" />
                     {{ config('app.name') }}
                 </a>
 
@@ -42,7 +42,9 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('account.home') }}">{{ Auth::user()->firstname }} {{ substr(Auth::user()->lastname, 0, 1) }}.</a>
+                                <a class="nav-link" href="{{ route('account.home') }}">
+                                    Mon compte ({{ Auth::user()->firstname }} {{ substr(Auth::user()->lastname, 0, 1) }}.)
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}"
@@ -76,13 +78,14 @@
                 <div class="row">
                     <div class="col-md-3">
                         <p class="lead">
-                            <img src="/favicon.png" alt="Logo" class="img-fluid" style="max-height: 24px;" />
+                            <img src="/favicon.png" alt="Logo" class="img-fluid mr-2" style="max-height: 24px; vertical-align: top;" />
                             <strong>{{ config('app.name') }}</strong>
                         </p>
                         <p class="text-muted">
                             Tout droits réservés
                         </p>
                     </div>
+                    
                     <div class="col-md-9 text-muted">
                         <ul class="list-unstyled">
                             <li><a href={{ route('register') }}>Inscription</a> / <a href="{{ route('login') }}">Connexion</a></li>

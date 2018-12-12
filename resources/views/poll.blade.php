@@ -4,17 +4,15 @@
     <div class="col-md-8">
         <h2>
             Sondage n°{{ $poll->id }}
-            <div class="float-right">
-                @if($poll->is_ended)
-                    <span class="badge badge-secondary badge-pill">
-                        Sondage terminé
-                    </span>
-                @else
-                    <span class="badge badge-info badge-pill">
-                        Termine dans {{ $poll->ends_at->diffForHumans() }}
-                    </span>
-                @endif
-            </div>
+            @if($poll->is_ended)
+                <span class="badge badge-secondary badge-pill">
+                    Sondage terminé
+                </span>
+            @else
+                <span class="badge badge-info badge-pill">
+                    Termine dans {{ $poll->ends_at->diffForHumans() }}
+                </span>
+            @endif
         </h2>
 
         <div class="card border-primary my-4">
