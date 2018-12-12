@@ -17,10 +17,10 @@ class CreatePollsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->boolean('is_valid')->default(false);
+            $table->boolean('is_valid')->default(false)->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->dateTime('starts_at')->index();
-            $table->dateTime('ends_at')->index();
+            $table->dateTime('starts_at')->index()->nullable();
+            $table->dateTime('ends_at')->index()->nullable();
             $table->timestamps();
         });
     }

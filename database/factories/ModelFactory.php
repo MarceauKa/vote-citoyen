@@ -19,3 +19,41 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Models\Poll::class, function (Faker $faker) {
+    $faker = \Faker\Factory::create('fr_FR');
+
+    return [
+        'name' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'user_id' => 1,
+    ];
+});
+
+$factory->state(App\Models\Poll::class, 'current', function (Faker $faker) {
+    $faker = \Faker\Factory::create('fr_FR');
+
+    return [
+        'is_valid' => 1,
+        'starts_at' => $faker->dateTimeBetween('-5 days', '-1 days'),
+        'ends_at' => $faker->dateTimeBetween('+3 days', '+10 days'),
+    ];
+});
+
+$factory->state(App\Models\Poll::class, 'ended', function (Faker $faker) {
+    $faker = \Faker\Factory::create('fr_FR');
+
+    return [
+        'is_valid' => 1,
+        'starts_at' => $faker->dateTimeBetween('-25 days', '-10 days'),
+        'ends_at' => $faker->dateTimeBetween('-15 days', '-1 days'),
+    ];
+});
+
+$factory->state(App\Models\Poll::class, 'pending', function (Faker $faker) {
+    $faker = \Faker\Factory::create('fr_FR');
+
+    return [
+        'is_valid' => 0,
+    ];
+});

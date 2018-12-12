@@ -78,15 +78,25 @@
             </div>
         </main>
 
-        <footer class="py-4">
+        <footer class="py-4 border-top">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 text-muted">
-                        {{ config('app.name') }} - Tout droits réservés
+                    <div class="col-md-3">
+                        <p class="lead">
+                            <img src="/favicon.png" alt="Logo" class="img-fluid" style="max-height: 24px;" />
+                            <strong>{{ config('app.name') }}</strong>
+                        </p>
+                        <p class="text-muted">
+                            Tout droits réservés
+                        </p>
                     </div>
-                    <div class="col-md-6 text-muted text-right">
-                        <a href="#">Conditions générales d'utilisation</a> -
-                        <a href="https://github.com/MarceauKa/vote-citoyen" target="_blank">Code source</a>
+                    <div class="col-md-9 text-muted">
+                        <ul class="list-unstyled">
+                            <li><a href={{ route('register') }}>Inscription</a> / <a href="{{ route('login') }}">Connexion</a></li>
+                            <li><a href="#">Proposer un sondage</a></li>
+                            <li><a href="{{ route('terms') }}">Conditions générales d'utilisation</a></li>
+                            <li><a href="https://github.com/MarceauKa/vote-citoyen" target="_blank">Code source</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

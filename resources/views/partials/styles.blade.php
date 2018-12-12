@@ -3,7 +3,7 @@
 <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 <style type="text/css">
     main {
-        min-height: 80vh;
+        min-height: 70vh;
     }
 </style>
 @stack('css')
