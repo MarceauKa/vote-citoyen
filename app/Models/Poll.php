@@ -27,6 +27,7 @@ class Poll extends Model
     /** @var array $appends */
     protected $appends = [
         'url',
+        'is_ended',
     ];
 
     public function owner(): BelongsTo
@@ -46,16 +47,23 @@ class Poll extends Model
         return route($name, [$this->id, str_slug($this->name)]);
     }
 
+    public function getIsEndedAttribute(): bool
+    {
+        return Carbon::now()->gte($this->attributes['ends_at']);
+    }
+
     public function scopeIsEnded(Builder $query): void
     {
         $now = Carbon::now()->toDateTimeString();
         $query->where('ends_at', '<', $now);
     }
 
-    public function scopeCanBeAnswered(Builder $query): void
+    public function scopeIsNotEnded(Builder $query): void
     {
-        $now = Carbon::now()->toDateTimeString();
-        $query->where('starts_at', '<=', $now)->where('ends_at', '<=', $now);
+        $query->where(function ($query) {
+            $now = Carbon::now()->toDateTimeString();
+            $query->where('starts_at', '<=', $now)->where('ends_at', '>=', $now);
+        });
     }
 
     public function scopeIsValid(Builder $query): void

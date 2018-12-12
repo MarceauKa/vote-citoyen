@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        factory(\App\Models\Poll::class, 1)->state('current')->create();
+        factory(\App\Models\Poll::class, 2)->state('current')->create();
         factory(\App\Models\Poll::class, 1)->state('ended')->create();
         factory(\App\Models\Poll::class, 2)->state('pending')->create();
     }

@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $polls = Poll::isValid()->canBeAnswered()->get();
+        $polls = Poll::isValid()->isNotEnded()->get();
         $count_pending_polls = Poll::isNotValid()->count();
         $count_ended_polls = Poll::isValid()->isEnded()->count();
 

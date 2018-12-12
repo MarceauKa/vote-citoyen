@@ -15,6 +15,7 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('poll_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->string('content', 3);
             $table->string('ip_address');

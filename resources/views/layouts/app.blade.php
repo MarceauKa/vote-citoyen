@@ -41,26 +41,19 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->firstname }} {{ substr(Auth::user()->lastname, 0, 1) }}. <span class="caret"></span>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('account.home') }}">{{ Auth::user()->firstname }} {{ substr(Auth::user()->lastname, 0, 1) }}.</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('account.home') }}">
-                                        {{ __('Mon compte') }}
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </li>
                         @endguest
                     </ul>
@@ -68,7 +61,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="content my-auto py-4">
             <div class="container">
                 @include('flash::message')
 
@@ -78,7 +71,7 @@
             </div>
         </main>
 
-        <footer class="py-4 border-top">
+        <footer class="footer py-4">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">

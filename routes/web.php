@@ -28,5 +28,6 @@ Route::group([
     'prefix' => 'reponse',
     'middleware' => 'auth',
 ], function ($router) {
+    $router->post('{id}', 'AnswerController@store')->name('store');
 });
 

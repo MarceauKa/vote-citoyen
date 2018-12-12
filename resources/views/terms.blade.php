@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-md-8">
-        <div class="card">
+        <div class="card border-primary">
             <div class="card-header">{{ $page_title }}</div>
             <div class="card-body">
                 <p class="text-justify">
