@@ -27,7 +27,11 @@ class Poll extends Model
     /** @var array $appends */
     protected $appends = [
         'url',
+        'is_proposed',
+        'is_pending',
+        'is_current',
         'is_ended',
+        'has_dates',
     ];
 
     public function owner(): BelongsTo
@@ -42,37 +46,93 @@ class Poll extends Model
 
     public function getUrlAttribute(): string
     {
-        $name = $this->is_valid == 0 ? 'proposal.show' : 'poll.show';
-
-        return route($name, [$this->id, str_slug($this->name)]);
+        return route('poll.show', [
+            $this->id,
+            str_slug($this->name)
+        ]);
     }
 
     public function getIsEndedAttribute(): bool
     {
-        return Carbon::now()->gte($this->attributes['ends_at']);
+        return $this->has_dates
+            && Carbon::now()->gte($this->ends_at)
+            && $this->is_valid == 1;
+    }
+
+    public function getIsPendingAttribute(): bool
+    {
+        return $this->has_dates
+            && Carbon::now()->lt($this->starts_at)
+            && Carbon::now()->lt($this->ends_at)
+            && $this->is_valid == 1;
+    }
+
+    public function getIsCurrentAttribute(): bool
+    {
+        return $this->has_dates
+            && Carbon::now()->gte($this->starts_at)
+            && Carbon::now()->lte($this->ends_at)
+            && $this->is_valid == 1;
+    }
+
+    public function getIsProposedAttribute(): bool
+    {
+        return $this->is_valid == 1
+            && ! $this->has_dates;
+    }
+
+    public function getHasDatesAttribute(): bool
+    {
+        return ! empty($this->starts_at)
+            && ! empty($this->ends_at);
+    }
+
+    public function scopeUserHasNoVote(Builder $query, User $user): Builder
+    {
+        return $query->whereDoesntHave('answers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
     }
 
     public function scopeIsEnded(Builder $query): void
     {
         $now = Carbon::now()->toDateTimeString();
-        $query->where('ends_at', '<', $now);
+
+        $query->hasDates()
+            ->where('ends_at', '<', $now)
+            ->where('is_valid', '=', 1);
     }
 
-    public function scopeIsNotEnded(Builder $query): void
+    public function scopeIsCurrent(Builder $query): void
     {
-        $query->where(function ($query) {
-            $now = Carbon::now()->toDateTimeString();
-            $query->where('starts_at', '<=', $now)->where('ends_at', '>=', $now);
-        });
+        $now = Carbon::now()->toDateTimeString();
+
+        $query->hasDates()
+            ->where('starts_at', '<', $now)
+            ->where('ends_at', '>', $now)
+            ->where('is_valid', '=', 1);
     }
 
-    public function scopeIsValid(Builder $query): void
+    public function scopeIsPending(Builder $query): void
     {
-        $query->where('is_valid', '=', 1);
+        $now = Carbon::now()->toDateTimeString();
+
+        $query->hasDates()
+            ->where('starts_at', '>', $now)
+            ->where('ends_at', '>', $now)
+            ->where('is_valid', '=', 1);
     }
 
-    public function scopeIsNotValid(Builder $query): void
+    public function scopeIsProposed(Builder $query): void
     {
-        $query->where('is_valid', '=', 0);
+        $query->where('is_valid', '=', 1)
+            ->whereNull('starts_at')
+            ->whereNull('ends_at');
+    }
+
+    public function scopeHasDates(Builder $query): void
+    {
+        $query->whereNotNull('starts_at')
+            ->whereNotNull('ends_at');
     }
 }

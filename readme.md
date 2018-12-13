@@ -27,10 +27,6 @@ php artisan migrate:fresh --seed
 - Email : `admin@vote-citoyen.fr`
 - Pass : `secret`
 
-# Tests
-
-`vendor/bin/phpunit`
-
 # Licence
 
 Ce code source est distribué sous [licence GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/#).

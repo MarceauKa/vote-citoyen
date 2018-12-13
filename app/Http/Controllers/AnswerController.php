@@ -11,17 +11,12 @@ class AnswerController extends Controller
 {
     public function store(Request $request, int $id)
     {
-        $poll = Poll::isNotEnded()->isValid()->findOrFail($id);
-        $answer = Answer::pollAndUserAre($poll, $request->user())->first();
-
-        if ($answer) {
-            flash()->error("Vous avez déjà voté pour ce sondage !");
-            return redirect()->back();
-        }
+        $poll = Poll::isCurrent()->userHasNoVote($request->user())->findOrFail($id);
 
         $validation = Validator::make($request->all(), [
             'consent' => ['present', 'filled'],
             'content' => ['present', 'in:yes,no'],
+            'captcha' => ['required', 'captcha'],
         ]);
 
         if ($validation->fails()) {
@@ -37,7 +32,7 @@ class AnswerController extends Controller
 
         $answer->save();
 
-        flash()->success("Votre vote a bien été pris en compte !");
+        flash()->overlay("Votre vote a bien été pris en compte !", 'Information');
         return redirect()->back();
     }
 }

@@ -27,33 +27,39 @@ $factory->define(App\Models\Poll::class, function (Faker $faker) {
         'name' => $faker->sentence,
         'description' => $faker->paragraph,
         'user_id' => 1,
+        'is_valid' => 0
     ];
 });
 
-$factory->state(App\Models\Poll::class, 'current', function (Faker $faker) {
-    $faker = \Faker\Factory::create('fr_FR');
-
+$factory->state(App\Models\Poll::class, 'proposed', function (Faker $faker) {
     return [
         'is_valid' => 1,
-        'starts_at' => $faker->dateTimeBetween('-5 days', '-1 days'),
-        'ends_at' => $faker->dateTimeBetween('+3 days', '+10 days'),
     ];
 });
 
-$factory->state(App\Models\Poll::class, 'ended', function (Faker $faker) {
-    $faker = \Faker\Factory::create('fr_FR');
-
-    return [
-        'is_valid' => 1,
-        'starts_at' => $faker->dateTimeBetween('-25 days', '-10 days'),
-        'ends_at' => $faker->dateTimeBetween('-15 days', '-1 days'),
-    ];
-});
 
 $factory->state(App\Models\Poll::class, 'pending', function (Faker $faker) {
     $faker = \Faker\Factory::create('fr_FR');
 
     return [
-        'is_valid' => 0,
+        'is_valid' => 1,
+        'starts_at' => $faker->dateTimeBetween('+5 days', '+10 days'),
+        'ends_at' => $faker->dateTimeBetween('+20 days', '+25 days'),
+    ];
+});
+
+$factory->state(App\Models\Poll::class, 'current', function (Faker $faker) {
+    return [
+        'is_valid' => 1,
+        'starts_at' => $faker->dateTimeBetween('-10 days', '-5 days'),
+        'ends_at' => $faker->dateTimeBetween('+5 days', '+10 days'),
+    ];
+});
+
+$factory->state(App\Models\Poll::class, 'ended', function (Faker $faker) {
+    return [
+        'is_valid' => 1,
+        'starts_at' => $faker->dateTimeBetween('-25 days', '-20 days'),
+        'ends_at' => $faker->dateTimeBetween('-15 days', '-5 days'),
     ];
 });

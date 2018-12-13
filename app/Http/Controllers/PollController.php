@@ -11,10 +11,10 @@ class PollController extends Controller
 {
     public function show(Request $request, int $id, string $name)
     {
-        $poll = Poll::isValid()->find($id);
+        $poll = Poll::findOrFail($id);
         $answer = Auth::check() ? Answer::pollAndUserAre($poll, $request->user())->first() : null;
 
-        return view('poll')->with([
+        return view('poll.show')->with([
             'page_title' => $poll->name,
             'page_description' => $poll->description,
             'poll' => $poll,

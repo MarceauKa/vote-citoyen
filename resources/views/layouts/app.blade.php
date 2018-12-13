@@ -28,17 +28,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">Tous les votes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('proposal.create') }}" class="nav-link">Proposer un vote</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">Connexion</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">Inscription</a>
                             </li>
                         @else
                             <li class="nav-item">
@@ -89,7 +94,7 @@
                     <div class="col-md-9 text-muted">
                         <ul class="list-unstyled">
                             <li><a href={{ route('register') }}>Inscription</a> / <a href="{{ route('login') }}">Connexion</a></li>
-                            <li><a href="#">Proposer un sondage</a></li>
+                            <li><a href="{{ route('proposal.create') }}">Proposer un vote</a></li>
                             <li><a href="{{ route('terms') }}">Conditions générales d'utilisation</a></li>
                             <li><a href="https://github.com/MarceauKa/vote-citoyen" target="_blank">Code source</a></li>
                         </ul>
@@ -98,6 +103,7 @@
             </div>
         </footer>
     </div>
+
     @include('partials.scripts')
 </body>
 </html>

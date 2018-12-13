@@ -1,17 +1,15 @@
 <?php
 
-// Home et pages publiques
+// Home et pages statiques
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('conditions-generales-utilisation', 'HomeController@terms')->name('terms');
 
 // Auth
 Auth::routes();
 
-// Sondages
-Route::get('archives', 'PollController@archives')->name('poll.archives');
-Route::get('propositions', 'PollController@proposals')->name('poll.proposals');
-Route::get('sondage/{id}/{name}', 'PollController@show')->name('poll.show');
-Route::get('proposition/{id}/{name}', 'PollController@proposal')->name('proposal.show');
+// Page publiques
+Route::get('vote/{id}/{name}', 'PollController@show')->name('poll.show');
+Route::get('propositions', 'ProposalController@proposals')->name('proposal.all');
 
 // Mon compte
 Route::group([
@@ -20,12 +18,26 @@ Route::group([
     'middleware' => 'auth',
 ], function ($router) {
     $router->get('/', 'AccountController@index')->name('home');
+    $router->put('/', 'AccountController@update')->name('update');
+    $router->put('/mot-de-passe', 'AccountController@password')->name('password');
+    $router->put('/email', 'AccountController@email')->name('email');
+    $router->get('/supprimer-compte', 'AccountController@delete')->name('delete');
 });
 
-// Réponses aux sondages
+// Propositions
+Route::group([
+    'as' => 'proposal.',
+    'prefix' => 'proposition',
+    'middleware' => 'auth',
+], function ($router) {
+    $router->get('creer', 'ProposalController@create')->middleware('auth')->name('create');
+    $router->post('creer', 'ProposalController@store')->middleware('auth')->name('store');
+});
+
+// Réponses aux votes
 Route::group([
     'as' => 'answer.',
-    'prefix' => 'reponse',
+    'prefix' => 'voter',
     'middleware' => 'auth',
 ], function ($router) {
     $router->post('{id}', 'AnswerController@store')->name('store');

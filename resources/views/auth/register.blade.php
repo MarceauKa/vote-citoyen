@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-8">
     <div class="card border-primary">
-        <div class="card-header">{{ __('Register') }}</div>
+        <div class="card-header">{{ $page_title }}</div>
 
         <div class="card-body">
             <form method="POST" action="{{ route('register') }}">
@@ -108,7 +108,7 @@
                                     </optgroup>
                                 @endforeach
                             </select>
-                            @if($errors->has('gender'))<span class="invalid-feedback" role="alert">{{ $errors->first('gender') }}</span>@endif
+                            @if($errors->has('social_category_id'))<span class="invalid-feedback" role="alert">{{ $errors->first('social_category_id') }}</span>@endif
                         </div>
                     </div>
                 </div>
@@ -134,6 +134,8 @@
                     </div>
                 </div>
 
+                @include('partials.form-captcha')
+
                 <div class="form-group mt-4">
                     <div class="form-check">
                         <input class="form-check-input"
@@ -149,7 +151,7 @@
                 </div>
 
                 <p class="text-left mt-4">
-                    <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                    <button type="submit" class="btn btn-primary">Confirmer mon inscription</button>
                 </p>
             </form>
         </div>
