@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2da5a52e11c5e18b5aa381a0db2fe34",
+    "content-hash": "b0b2705dda8a2dffcb2613f0dd5e0ec9",
     "packages": [
         {
             "name": "alariva/laravel-email-domain-blacklist",
