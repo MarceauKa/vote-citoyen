@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0b2705dda8a2dffcb2613f0dd5e0ec9",
+    "content-hash": "6510f636c65c74908eb2bfe633ec8b1a",
     "packages": [
         {
             "name": "alariva/laravel-email-domain-blacklist",
@@ -1132,6 +1132,57 @@
                 "psysh"
             ],
             "time": "2018-10-12T19:39:35+00:00"
+        },
+        {
+            "name": "larsjanssen6/underconstruction",
+            "version": "3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/larsjanssen6/underconstruction.git",
+                "reference": "98ffa99f785cee709a904a78c25ce4064bf03657"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/larsjanssen6/underconstruction/zipball/98ffa99f785cee709a904a78c25ce4064bf03657",
+                "reference": "98ffa99f785cee709a904a78c25ce4064bf03657",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0@dev",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.3|^7.0",
+                "symfony/thanks": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LarsJanssen\\UnderConstruction\\UnderConstructionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LarsJanssen\\UnderConstruction\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Janssen",
+                    "email": "mail@larsjanssen.net",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "https://github.com/larsjanssen6/underconstruction",
+            "time": "2018-12-15T15:36:31+00:00"
         },
         {
             "name": "lcobucci/jwt",

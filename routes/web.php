@@ -26,20 +26,31 @@ Route::group([
 
 // Propositions
 Route::group([
-    'as' => 'proposal.',
-    'prefix' => 'proposition',
     'middleware' => 'auth',
 ], function ($router) {
-    $router->get('creer', 'ProposalController@create')->middleware('auth')->name('create');
-    $router->post('creer', 'ProposalController@store')->middleware('auth')->name('store');
+    $router->get('proposition/creer', 'ProposalController@create')->name('proposal.create');
+    $router->post('proposition/creer', 'ProposalController@store')->name('proposal.store');
+
+    $router->post('soutenir/{id}', 'SupportController@store')->name('support.store');
+    $router->post('voter/{id}', 'AnswerController@store')->name('answer.store');
 });
 
-// Réponses aux votes
+// Admin
 Route::group([
-    'as' => 'answer.',
-    'prefix' => 'voter',
-    'middleware' => 'auth',
+    'namespace' => 'Admin',
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['auth', 'can:access-admin'],
 ], function ($router) {
-    $router->post('{id}', 'AnswerController@store')->name('store');
+    $router->get('users', 'UsersController@index')->name('users');
+
+    $router->get('polls', 'PollsController@index')->name('polls');
+    $router->get('polls/{id}', 'PollsController@edit')->name('polls.edit');
+    $router->post('polls/{id}', 'PollsController@update')->name('polls.update');
+    $router->get('polls/{id}/clear-supports', 'PollsController@clearSupports')->name('polls.clear-supports');
+    $router->get('polls/{id}/clear-answers', 'PollsController@clearAnswers')->name('polls.clear-answers');
+    $router->get('polls/{id}/delete', 'PollsController@delete')->name('polls.delete');
+
 });
+
 

@@ -17,9 +17,20 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        factory(\App\Models\Poll::class, 4)->state('proposed')->create();
-        factory(\App\Models\Poll::class, 3)->state('pending')->create();
-        factory(\App\Models\Poll::class, 2)->state('current')->create();
-        factory(\App\Models\Poll::class, 1)->state('ended')->create();
+        factory(\App\Models\Poll::class, 1)->state('proposed')->create([
+            'name' => "Doit-il y avoir une taxe sur le kérosène ?"
+        ]);
+
+        factory(\App\Models\Poll::class, 1)->state('proposed')->create([
+            'name' => "Etes-vous pour la légalisation du cannabis ?"
+        ]);
+
+        factory(\App\Models\Poll::class, 1)->state('pending')->create([
+            'name' => "Le SMIC doit-il être fixé à 1500 € net ?",
+        ]);
+
+        factory(\App\Models\Poll::class, 1)->state('current')->create([
+            'name' => "Etes-vous pour ou contre le référendum d'initiative citoyenne ?",
+        ]);
     }
 }

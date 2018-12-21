@@ -45,11 +45,34 @@ class User extends Authenticatable
         return $this->belongsToMany(Answer::class);
     }
 
+    public function supports(): BelongsToMany
+    {
+        return $this->belongsToMany(Support::class);
+    }
+
     public function getGenderNameAttribute(): string
     {
         $keys = array_keys(self::getGendersList());
         $current = $this->attributes['gender'];
         return $current && array_key_exists($current, $keys) ? self::getGendersList()[$current] : '-';
+    }
+
+    public function getFullnameAttribute(): string
+    {
+        return vsprintf('%s %s.', [
+            $this->firstname,
+            mb_substr($this->lastname, 0, 1),
+        ]);
+    }
+
+    public function setFirstnameAttribute(string $value): void
+    {
+        $this->attributes['firstname'] = mb_convert_case($value, MB_CASE_TITLE);
+    }
+
+    public function setLastnameAttribute(string $value): void
+    {
+        $this->attributes['lastname'] = mb_convert_case($value, MB_CASE_TITLE);
     }
 
     public function setPasswordAttribute(string $value): void

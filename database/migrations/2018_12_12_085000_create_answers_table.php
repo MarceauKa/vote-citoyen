@@ -18,6 +18,7 @@ class CreateAnswersTable extends Migration
             $table->integer('poll_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->string('content', 3);
+            $table->text('comment');
             $table->string('ip_address');
             $table->timestamps();
         });

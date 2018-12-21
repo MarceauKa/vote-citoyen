@@ -33,6 +33,8 @@ class Poll extends Model
         'is_ended',
         'has_dates',
     ];
+    /** @var string DATE_FORM_FORMAT */
+    const DATE_FORM_FORMAT = 'd/m/Y H:i';
 
     public function owner(): BelongsTo
     {
@@ -44,12 +46,30 @@ class Poll extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function supports(): HasMany
+    {
+        return $this->hasMany(Support::class);
+    }
+
     public function getUrlAttribute(): string
     {
         return route('poll.show', [
             $this->id,
             str_slug($this->name)
         ]);
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        if ($this->is_ended) {
+            return __('Vote terminé');
+        } else if ($this->is_current) {
+            return __('Vote en cours');
+        } else if ($this->is_pending) {
+            return __('Vote à venir');
+        } else {
+            return __('Vote proposé');
+        }
     }
 
     public function getIsEndedAttribute(): bool
@@ -90,6 +110,13 @@ class Poll extends Model
     public function scopeUserHasNoVote(Builder $query, User $user): Builder
     {
         return $query->whereDoesntHave('answers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
+    }
+
+    public function scopeUserHasNoSupport(Builder $query, User $user): Builder
+    {
+        return $query->whereDoesntHave('supports', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         });
     }

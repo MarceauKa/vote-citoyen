@@ -10,7 +10,11 @@ body,
 }
 
 body {
-  background-image: linear-gradient( 109.6deg,  rgba(185,212,242,1) 11.2%, rgba(244,210,226,1) 100.3% );
+  // background-image: linear-gradient( 109.6deg,  rgba(185,212,242,1) 11.2%, rgba(244,210,226,1) 100.3% );
+  background-image: url('/img/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .navbar-laravel {
